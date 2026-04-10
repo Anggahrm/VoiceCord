@@ -1,0 +1,5 @@
+.omx/
+.env
+.codex
+__pycache__/
+*.pyc

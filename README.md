@@ -140,7 +140,7 @@ This happens because repls have Shared Public IP Addresses, and some Replit User
 <details>
 <summary>Click here to view the explanation and fix</summary>
 <br>
-Run <code>pip install websocket</code> in the shell
+Run <code>pip install websocket-client</code> in the shell
 </details>
 
 ### [Replit] TypeError: WebSocket.__init() missing 3 required positional arguments: 'environ', 'socket', and 'rfile'
@@ -148,6 +148,24 @@ Run <code>pip install websocket</code> in the shell
 <summary>Click here to view the explanation and fix</summary>
 <br>
 Run <code>pip install websocket-client</code> in the shell
+</details>
+
+### Running with PM2
+<details>
+<summary>Click here to view PM2 setup</summary>
+<br>
+This repo now includes <code>ecosystem.config.js</code> for PM2.
+<br><br>
+Start:
+<pre><code>pm2 start ecosystem.config.js</code></pre>
+Restart:
+<pre><code>pm2 restart voicecord</code></pre>
+Logs:
+<pre><code>pm2 logs voicecord</code></pre>
+Save process list:
+<pre><code>pm2 save</code></pre>
+<br>
+The config uses <code>.venv/bin/python</code>, so make sure the virtualenv exists and dependencies are installed there.
 </details>
 
 ---

@@ -168,6 +168,36 @@ Save process list:
 The config uses <code>.venv/bin/python</code>, so make sure the virtualenv exists and dependencies are installed there.
 </details>
 
+### Production Notes (24/7)
+<details>
+<summary>Click here for production setup tips</summary>
+<br>
+
+For long-running 24/7 deploys, do the following once on the host:
+
+1. **Enable PM2 log rotation** (otherwise logs grow unbounded):
+   <pre><code>pm2 install pm2-logrotate
+pm2 set pm2-logrotate:max_size 10M
+pm2 set pm2-logrotate:retain 7
+pm2 set pm2-logrotate:compress true</code></pre>
+
+2. **Persist PM2 across reboots**:
+   <pre><code>pm2 startup
+pm2 save</code></pre>
+
+3. **Provide config via `.env`** in the project root (`TOKEN` is required; the rest are optional and fall back to the defaults baked into <code>main.py</code>):
+   <pre><code>TOKEN=your_user_token
+GUILD_ID=...
+CHANNEL_ID=...
+STATUS=idle
+SELF_MUTE=true
+SELF_DEAF=false</code></pre>
+
+**Exit code behavior**: if Discord rejects the token (gateway close <code>4004</code>, or HTTP <code>401</code> on <code>/users/@me</code>), the process exits with status <code>1</code> and a clear error in the log. PM2 will still restart it per <code>autorestart</code>; if you don't want that for a revoked token, run with <code>pm2 start ecosystem.config.js --no-autorestart</code> after rotating the token, or stop the process manually.
+
+**Reconnect behavior**: the gateway client now keeps a persistent WebSocket with a heartbeat thread, and reconnects with exponential backoff (5s → 60s + jitter) on any network/gateway error. PM2 should rarely need to restart the process during normal operation.
+</details>
+
 ---
 
 <p align="center">❤️ Voicecord is licensed under GNU General Public License.</p>

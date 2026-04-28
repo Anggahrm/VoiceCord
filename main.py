@@ -39,7 +39,7 @@ if STATUS not in {"online", "idle", "dnd", "invisible"}:
     STATUS = "idle"
 
 GUILD_ID = os.getenv("GUILD_ID", "1182524283671543808")
-CHANNEL_ID = os.getenv("CHANNEL_ID", "1492160264995471650")
+CHANNEL_ID = os.getenv("CHANNEL_ID", "1494568235562041415")
 SELF_MUTE = os.getenv("SELF_MUTE", "true").lower() in {"1", "true", "yes", "y", "on"}
 SELF_DEAF = os.getenv("SELF_DEAF", "false").lower() in {"1", "true", "yes", "y", "on"}
 
